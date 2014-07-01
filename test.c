@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include <time.h>
 
-const char config_string[] = "--SERVER=16.106.36.222 --BINARY-PROTOCOL";
+const char config_string[] = "--SERVER=192.168.1.222 --BINARY-PROTOCOL";
 const char testkey[] = "testkey";
 const int keylen = sizeof(testkey);
 
@@ -164,8 +164,11 @@ main(int argc, char *argv[])
         ret = (MEMCACHED_SUCCESS != mret);
         if (ret)
             perror("memcached_set");
-        else
+        else {
             ret = run_test(num_threads, object_size, count);
+            free(testvalue);
+            testvalue = NULL;
+        }
     }
 
     if (memc)
